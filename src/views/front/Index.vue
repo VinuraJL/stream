@@ -54,7 +54,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
-          <h1 class="text-xl font-semibold text-gray-900">Albums</h1>
+          <h1 class="text-xl font-semibold text-gray-900">Album</h1>
         </div>
       </div>
 
