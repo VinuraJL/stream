@@ -8,7 +8,7 @@
             <!-- Mobile menu button-->
             <DisclosureButton class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span class="absolute -inset-0.5" />
-              <span class="sr-only">Open main menus</span>
+              <span class="sr-only">Open main menu</span>
               <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
               <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
             </DisclosureButton>
@@ -54,73 +54,18 @@
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto"></div>
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <RouterLink
-            to="/admin/genre/create"
-            type="button"
-            class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Add Genre
-          </RouterLink>
-        </div>
+        
       </div>
-      <div class="mt-8 flow-root">
-        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table class="min-w-full divide-y divide-gray-300">
-              <thead>
-                <tr>
-                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                    ID
-                  </th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Image
-                  </th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Name
-                  </th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Description
-                  </th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Status
-                  </th>
-                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                    <span class="sr-only">Edit</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-200">
-                <tr v-for="genre in genres" :key="genre.id">
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                    {{ genre.id }}
-                  </td>
-                  <td class="py-4 pl-3 pr-4 text-sm text-gray-500">
-                    <img :src="genre.image" alt="Genre Image" class="h-8 w-8 rounded-full mr-2">
-                  </td>
-                  <td class="whitespace-nowrap py-4 text-sm text-gray-500">
-                    {{ genre.name }}
-                  </td>
-                  <td class="whitespace-nowrap py-4 text-sm text-gray-500">
-                    {{ genre.description }}
-                  </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <span v-if="genre.status">Active</span>
-                    <span v-else>Inactive</span>
-                  </td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <RouterLink :to="`/admin/genre/${genre.id}`" class="text-indigo-600 hover:text-indigo-900">
-                      View
-                      <span class="sr-only">, {{ genre.name }}</span>
-                    </RouterLink>
-                    |
-                    <RouterLink :to="`/admin/genre/${genre.id}/edit`" class="text-indigo-600 hover:text-indigo-900">
-                      Edit
-                      <span class="sr-only">, {{ genre.name }}</span>
-                    </RouterLink>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <!-- Genre Tiles -->
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div v-for="genre in genres" :key="genre.id" class="bg-white overflow-hidden shadow-sm rounded-lg">
+          <img :src="genre.image" alt="Genre Image" class="h-64 w-full object-cover">
+          <div class="p-4">
+            <h2 class="text-lg font-semibold text-gray-800">{{ genre.name }}</h2>
+            <p class="mt-2 text-sm text-gray-600">{{ genre.description }}</p>
+            <p class="mt-2 text-sm text-gray-600" v-if="genre.status">Status: Active</p>
+            <p class="mt-2 text-sm text-gray-600" v-else>Status: Inactive</p>
+            
           </div>
         </div>
       </div>
@@ -136,14 +81,10 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
 
 const navigation = [
- 
-  { name: 'Admin Dashboard', href: '/AdminDashboard', current: false },
-  
-  { name: 'Albums', href: '/admin/album', current: false },
-  { name: 'Artists', href: '/admin/artist', current: false },
-  { name: 'Genres', href: '/admin/genre', current: true },
-  { name: 'Tracks', href: '/admin/track', current: false },
-  { name: 'Users', href: '/admin/users', current: false }
+{ name: 'Albums', href: '/front', current: false },
+  { name: 'Artists', href: '/front/artist', current: false },
+  { name: 'Genres', href: '/front/genre', current: true },
+  { name: 'Tracks', href: '/front/track', current: false },
 ]
 
 const genres = ref([]);
@@ -155,33 +96,6 @@ fetch('https://t0nwhviu23.execute-api.ap-southeast-1.amazonaws.com/dev/genres')
     genres.value = response.body
   })
 
-// const genres = ref([
-//   {
-//     id: 1,
-//     name: "RAP",
-//     description: "Rap is a musical genre that incorporates rhythmic speech and street vernacular over backing beats.",
-//     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFFK7DRRgPp9CILJfmlK3ZAfkNQG8aFwzgGA&s",
-//     sort_order: 0,
-//     status: true
-//   },
-//   {
-//     id: 2,
-//     name: "POP",
-//     description: "Pop music is known for its catchy melodies and wide appeal, often blending elements from various genres.",
-//     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlP1rFJSRI6SM5IY43cWtKgGQhAAVhssggVA&s",
-//     sort_order: 1,
-//     status: true
-//   },
-//   {
-//     id: 3,
-//     name: "ROCK",
-//     description: "Rock music is characterized by a strong beat, simple chord progressions, and often revolves around electric guitar.",
-//     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiEiCfvdMPRs28QPgMJiYw7OkEn97JilYUJQ&s",
-//     sort_order: 2,
-//     status: false
-//   },
-//   // Add more genres as needed
-// ])
 </script>
 
 <style></style>

@@ -157,7 +157,7 @@ const router = createRouter({
     },
     {
       path: '/front/artist',
-      name: 'viewArtist',
+      name: 'viewArtists',
       component: () => import('../views/front/Artist.vue')
     },
     {
