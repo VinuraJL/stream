@@ -154,7 +154,7 @@ import { RouterLink } from 'vue-router'
 
 const navigation = [
 
-  { name: 'Admin Dashboard', href: '/AdminDashboard', current: false },
+  
 
   { name: 'Albums', href: '/admin/album', current: false },
   { name: 'Artists', href: '/admin/artist', current: false },
